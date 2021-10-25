@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index Page</title>
+</head>
+<body>
+    <h2>Suppliers page !</h2>
+    <hr>
+    <table>
+        <tr>
+            <th>ID</th><th>Name</th><th>Email</th>
+        </tr>
+        <tr th:each="s:${suppliers}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.email}"></td>
+        </tr>
+    </table>
+</body>
+</html>
