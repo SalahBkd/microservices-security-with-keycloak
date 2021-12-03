@@ -50,9 +50,7 @@ class Product {
     private String name;
     private double price;
 }
-
 interface ProductRepo extends JpaRepository<Product, Long> {}
-
 @Controller
 class ProductController {
     @Autowired
@@ -72,11 +70,9 @@ class ProductController {
 
 @SpringBootApplication
 public class EcommerceAppApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(EcommerceAppApplication.class, args);
     }
-
     @Bean
     CommandLineRunner start(ProductRepo productRepo) {
         return args -> {
@@ -88,6 +84,7 @@ public class EcommerceAppApplication {
     }
 }
 
+// ====================================== SECURITY ======================================
 // Keycloak needs this object to be in context
 @Configuration
 class KeycloakConfiguration {
@@ -99,7 +96,6 @@ class KeycloakConfiguration {
     @Bean
     KeycloakRestTemplate keycloakRestTemplate(KeycloakClientRequestFactory keycloakClientRequestFactory) {
         return new KeycloakRestTemplate(keycloakClientRequestFactory);
-
     }
 }
 
@@ -127,7 +123,7 @@ class KeycloakSpringSecurityAdapter extends KeycloakWebSecurityConfigurerAdapter
 }
 
 @Controller
-class SecuirtyController {
+class SecurityController {
     @Autowired
     private AdapterDeploymentContext adapterDeploymentContext;
 
@@ -164,7 +160,8 @@ class SupplierController {
         // RestTemplate allow us to communicate with HTTP
         // each time we send a request the bearer token (JWT) is sent with it
         ResponseEntity<PagedModel<Supplier>> response =
-                keycloakRestTemplate.exchange("http://localhost:8083/suppliers", HttpMethod.GET, null, new ParameterizedTypeReference<PagedModel<Supplier>>() {});
+                keycloakRestTemplate.exchange("http://localhost:8083/suppliers",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<PagedModel<Supplier>>() {});
         model.addAttribute("suppliers", response.getBody().getContent());
         return "suppliers";
     }

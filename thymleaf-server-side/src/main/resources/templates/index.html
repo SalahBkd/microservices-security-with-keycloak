@@ -16,7 +16,7 @@
         <ul sec:authorize="isAuthenticated()">
             <span sec:authentication="name"></span>
             <li><a href="/logout">Logout</a></li>
-            <li><a href="/changePassword">Change Password</a></li>
+            <li><a href="/changePassword"">Change Password</a></li>
         </ul>
         <li sec:authorize="isAnonymous()">
             <a href="/sso/login">Login</a>
