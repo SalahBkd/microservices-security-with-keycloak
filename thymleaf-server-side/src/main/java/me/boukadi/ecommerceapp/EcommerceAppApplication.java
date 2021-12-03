@@ -66,6 +66,8 @@ class ProductController {
         return "products";
     }
 
+
+
 }
 
 @SpringBootApplication
@@ -133,8 +135,8 @@ class SecurityController {
         return "redirect:/";
     }
 
-    @GetMapping("/changePassword")
-    public String changePassword(
+    @GetMapping("/profile")
+    public String profile(
             RedirectAttributes attributes,
             HttpServletRequest request,
             HttpServletResponse response
@@ -145,7 +147,7 @@ class SecurityController {
         attributes.addAttribute("referrer_uri", request.getHeader("referer"));
 
         // getAccountUrl() return the URL of the account to be modified
-        return "redirect:" + deployment.getAccountUrl() + "/password";
+        return "redirect:" + deployment.getAccountUrl();
     }
 }
 
@@ -156,9 +158,9 @@ class SupplierController {
 
     @GetMapping("/suppliers")
     public String index(Model model) {
-        // Keycloack adapter will create a class that inherit from RestTemplate of Spring
         // RestTemplate allow us to communicate with HTTP
-        // each time we send a request the bearer token (JWT) is sent with it
+        // WITH RestTemplate: we send JWT token for each request
+        // WITH KEYCLOAK: keycloakRestTemplate does that automatically, it's a class that inherits from RestTemplate
         ResponseEntity<PagedModel<Supplier>> response =
                 keycloakRestTemplate.exchange("http://localhost:8083/suppliers",
                         HttpMethod.GET, null, new ParameterizedTypeReference<PagedModel<Supplier>>() {});
